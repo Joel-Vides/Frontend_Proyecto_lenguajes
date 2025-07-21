@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "LexendDeca-Black";
+  src: url("./assets/fonts/LexendDeca-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LexendDeca-Bold";
+  src: url("./assets/fonts/LexendDeca-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LexendDeca-ExtraBold";
+  src: url("./assets/fonts/LexendDeca-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LexendDeca-Light";
+  src: url("./assets/fonts/LexendDeca-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LexendDeca-Medium";
+  src: url("./assets/fonts/LexendDeca-Medium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LexendDeca-Regular";
+  src: url("./assets/fonts/LexendDeca-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-LexendDeca-Black: "LexendDeca-Black", "sans-serif";
+  --font-LexendDeca-Bold: "LexendDeca-Bold", "sans-serif";
+  --font-LexendDeca-ExtraBold: "LexendDeca-ExtraBold", "sans-serif";
+  --font-LexendDeca-Light: "LexendDeca-Light", "sans-serif";
+  --font-LexendDeca-Medium: "LexendDeca-Medium", "sans-serif";
+  --font-LexendDeca-Regular: "LexendDeca-Regular", "sans-serif";
+}
