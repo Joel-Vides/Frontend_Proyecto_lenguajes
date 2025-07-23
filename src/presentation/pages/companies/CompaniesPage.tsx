@@ -48,6 +48,7 @@ export const CompaniesPage = () => {
             Añadir Empresa
           </span>
         </button>
+        
       </div>
 
       {/* Detalles de las Empresas */}
