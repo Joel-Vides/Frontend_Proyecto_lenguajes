@@ -74,20 +74,20 @@ export const useCompanies = (companyId?: string) => {
     }, [refetch]);
 
     return {
-            // Properties
-    page,
-    pageSize,
-    searchTerm,
-    companiesPaginationQuery,
-    oneCompanyQuery,
-    createCompanyMutation,
-    editCompanyMutation,
-    deleteCompanyMutation,
+        // Properties
+        page,
+        pageSize,
+        searchTerm,
+        companiesPaginationQuery,
+        oneCompanyQuery,
+        createCompanyMutation,
+        editCompanyMutation,
+        deleteCompanyMutation,
 
-    // Methods
-    setPage,
-    setPageSize,
-    setSearchTerm,
-    refreshCompanies,
+        // Methods
+        setPage,
+        setPageSize,
+        setSearchTerm,
+        refreshCompanies,
     }
 }

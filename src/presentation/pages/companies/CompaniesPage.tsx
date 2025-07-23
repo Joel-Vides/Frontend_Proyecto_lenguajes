@@ -1,36 +1,39 @@
 import { Briefcase, Plus } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { DashboardCard } from "../../components/home/DashBoardCard"
 import { Title } from "../../components/shared/Title"
 import { useNavigate } from "react-router"
+import { useCompanies } from "../../hooks/useCompanies"
 
 export const CompaniesPage = () => {
+  const navigate = useNavigate()
 
-    const navigate = useNavigate()
+  const {
+    companiesPaginationQuery,
+    refreshCompanies,
+  } = useCompanies()
 
+  const [selectedCompanyId, setSelectedCompanyId] = useState<string | null>(null)
 
-  const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null)
+  // Recarga la lista al regresar desde CreateCompanyPage
+  useEffect(() => {
+    refreshCompanies()
+  }, [])
 
-  const companyData = [
-    { id: 1, title: "Empresa 1", info: "Bus 101" },
-    { id: 2, title: "Empresa 2", info: "Bus 202" },
-    { id: 3, title: "Empresa 3", info: "Bus 103" },
-
-  ]
+  // Extrae las empresas desde la data
+  const companyData = companiesPaginationQuery.data?.data.items || []
 
   const selectedCompany = companyData.find(company => company.id === selectedCompanyId)
 
   return (
-
     <div className="flex h-screen">
-
-      {/* Empresas Disponibles */}
+      {/* Empresas */}
       <div className="w-1/2 border-r p-4 overflow-y-auto">
         <Title text="Empresas" />
         {companyData.map((company) => (
           <DashboardCard
             key={company.id}
-            title={company.title}
+            title={company.name}
             icon={<Briefcase size={48} />}
             onClick={() => setSelectedCompanyId(company.id)}
           />
@@ -45,25 +48,21 @@ export const CompaniesPage = () => {
             Añadir Empresa
           </span>
         </button>
-
-
-
-
       </div>
 
-      {/* Información de la EMpresa Seleccionada */}
+      {/* Detalles de las Empresas */}
       <div className="w-1/2 p-4 overflow-y-auto">
         <Title text="Información" />
         {selectedCompany ? (
           <div>
-            <h2 className="text-2xl font-bold mb-2">{selectedCompany.title}</h2>
-            <p className="text-gray-700">{selectedCompany.info}</p>
+            <h2 className="text-2xl font-bold mb-2">{selectedCompany.name}</h2>
+            <p className="text-gray-700"><strong>Email:</strong> {selectedCompany.email}</p>
+            <p className="text-gray-700"><strong>Teléfono:</strong> {selectedCompany.phoneNumber}</p>
           </div>
         ) : (
           <p className="text-gray-500 italic">Selecciona una empresa para ver sus detalles</p>
         )}
       </div>
-
     </div>
   )
 }
