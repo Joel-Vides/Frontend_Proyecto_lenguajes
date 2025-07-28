@@ -1,6 +1,6 @@
 import { FormikProvider, useFormik } from "formik";
 import { useCompanies } from "../../hooks/useCompanies";
-import { companyInitialValues, companyValidationSchema } from "../../../infrastructure/interfaces/validations/country.validation";
+import { companyInitialValues, companyValidationSchema } from "../../../infrastructure/interfaces/validations/company.validation";
 import { Title } from "../../components/shared/Title";
 import { Link } from "react-router";
 
@@ -37,7 +37,7 @@ export const CreateCompanyPage = () => {
                         <input type="text"
                             id="name"
                             name="name"
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-blue-500 leading-tight focus:outline-none"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-cyan-800 leading-tight focus:outline-none"
                             value={formik.values.name}
                             onChange={formik.handleChange} />
                         {formik.touched.name && formik.errors.name && (
@@ -54,7 +54,7 @@ export const CreateCompanyPage = () => {
                         <input type="text"
                             id="email"
                             name="email"
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-blue-500 leading-tight focus:outline-none"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-cyan-800 leading-tight focus:outline-none"
                             value={formik.values.email}
                             onChange={formik.handleChange} />
                         {formik.touched.email && formik.errors.email && (
@@ -71,7 +71,7 @@ export const CreateCompanyPage = () => {
                         <input type="text"
                             id="phoneNumber"
                             name="phoneNumber"
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-blue-500 leading-tight focus:outline-none"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-cyan-800 leading-tight focus:outline-none"
                             value={formik.values.phoneNumber}
                             onChange={formik.handleChange} />
                         {formik.touched.phoneNumber && formik.errors.phoneNumber && (

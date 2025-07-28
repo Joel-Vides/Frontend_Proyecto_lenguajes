@@ -10,7 +10,7 @@ export const getOneCompanyAction = async (companyId: string):
     try {
 
         const { data } = await busesApi
-        .get<ApiResponse<OneCompanyResponse>>(`/countries/${companyId}`);
+        .get<ApiResponse<OneCompanyResponse>>(`/companies/${companyId}`);
 
         return data;
 

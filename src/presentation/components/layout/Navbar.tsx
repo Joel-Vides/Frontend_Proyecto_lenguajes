@@ -28,7 +28,7 @@ export const Navbar = () => {
                     <div className="flex justify-between h-16">
                         {/* Logo y titulo */}
                         <div className="flex items-center">
-                            <span className="font-LexendDeca-Bold text-xl">
+                            <span className="font-LexendDeca-Bold text-xl font-bold">
                                 Terminal
                             </span>
                         </div>
