@@ -1,4 +1,5 @@
-export interface BusModel {
+export interface BusResponse {
+    id: string;
     numeroBus: string;
     chofer:    string;
     modelo:    string;
