@@ -3,15 +3,16 @@ import type { ApiResponse } from "../../../../infrastructure/interfaces/api.resp
 import { busesApi } from "../../../api/persons.api";
 import type { CompanyModel } from "../../../models/company.models";
 import type { ApiErrorResponse } from "../../../../infrastructure/interfaces/api-error.response";
+import type { CompanyResponse } from "../../../../infrastructure/interfaces/companies.response";
 
 export const editCompanyAction = async (
     company: CompanyModel, companyId: string
-): Promise<ApiResponse<CompanyModel>> => {
+): Promise<ApiResponse<CompanyResponse>> => {
 
     try {
 
         const { data } = await busesApi
-            .put<ApiResponse<CompanyModel>>(
+            .put<ApiResponse<CompanyResponse>>(
                 `/companies/${companyId}`,
                 company
             );

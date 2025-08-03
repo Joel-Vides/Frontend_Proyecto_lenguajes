@@ -6,6 +6,8 @@ import { CreateCompanyPage } from "../presentation/pages/companies/CreateCompany
 import { EditCompanyPage } from "../presentation/pages/companies/EditCompanyPage"
 import { DeleteCompanyPage } from "../presentation/pages/companies/DeleteCompanyPage"
 import { CreateBusPage } from "../presentation/pages/home/CreateBusPage"
+import { EditBusPage } from "../presentation/pages/home/EditBusPage"
+import { DeleteBusPage } from "../presentation/pages/home/DeleteBusPage"
 
 export const AppRouter = () => {
     return (
@@ -21,6 +23,8 @@ export const AppRouter = () => {
                     {/* Rutas de Páginas de Buses */}
                     <Route path="/" element={<HomePage />} />
                     <Route path="/buses/create" element={<CreateBusPage />}></Route>
+                    <Route path="/buses/:busId/edit" element={<EditBusPage />}></Route>
+                    <Route path="/buses/:busId/delete" element={<DeleteBusPage />}></Route>
 
                 </Route>
 

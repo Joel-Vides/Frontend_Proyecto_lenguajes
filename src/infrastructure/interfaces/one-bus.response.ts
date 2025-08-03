@@ -1,7 +1,5 @@
-export interface OneBusResponse {
-    id:        string;
-    numeroBus: null;
-    chofer:    null;
-    modelo:    null;
-    anio:      number;
+import type { BusModel } from "../../core/models/bus.models";
+
+export interface OneBusResponse extends BusModel {
+  id: string;
 }

@@ -4,10 +4,10 @@ import { DashboardCard } from "../../components/home/DashBoardCard";
 import { Title } from "../../components/shared/Title";
 import { useNavigate } from "react-router";
 import { useBuses } from "../../hooks/useBuses";
+import { BusMap } from "./BusMap";
 
 export const HomePage = () => {
   const navigate = useNavigate();
-
   const {
     busesPaginationQuery,
     refreshBuses,
@@ -99,14 +99,29 @@ export const HomePage = () => {
       <section className="lg:w-1/2 bg-white rounded-xl border border-gray-200 shadow-sm p-6 overflow-y-auto">
         <Title text="Información del Bus" />
         {selectedBus ? (
-          <div className="mt-4 space-y-3 text-gray-800">
-            <h2 className="text-2xl font-bold border-b pb-2">
-              Bus {selectedBus.numeroBus}
-            </h2>
-            <p><strong>Chofer:</strong> {selectedBus.chofer}</p>
-            <p><strong>Modelo:</strong> {selectedBus.modelo}</p>
-            <p><strong>Año:</strong> {selectedBus.anio}</p>
-          </div>
+          <>
+            <div className="mt-4 space-y-3 text-gray-800">
+              <h2 className="text-2xl font-bold border-b pb-2">
+                Bus {selectedBus.numeroBus}
+              </h2>
+              <p><strong>Chofer:</strong> {selectedBus.chofer}</p>
+              <p><strong>Modelo:</strong> {selectedBus.modelo}</p>
+              <p><strong>Año:</strong> {selectedBus.anio}</p>
+            </div>
+
+            <div className="mt-6">
+              <BusMap
+                start={{
+                  latitude: selectedBus.startLocation?.latitude ?? 0,
+                  longitude: selectedBus.startLocation?.longitude ?? 0,
+                }}
+                end={{
+                  latitude: selectedBus.endLocation?.latitude ?? 0,
+                  longitude: selectedBus.endLocation?.longitude ?? 0,
+                }}
+              />
+            </div>
+          </>
         ) : (
           <p className="text-gray-500 italic mt-4">
             Selecciona un bus para ver sus detalles

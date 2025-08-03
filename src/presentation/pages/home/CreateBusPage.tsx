@@ -120,7 +120,95 @@ export const CreateBusPage = () => {
             )}
           </div>
 
-          {/* Botones */}
+          {/* Latitud de Inicio */}
+          <div className="mb-6">
+            <label htmlFor="startLocation.latitude" className="block text-gray-700 text-sm font-semibold mb-2">
+              Latitud de Inicio
+            </label>
+            <input
+              type="number"
+              id="startLocation.latitude"
+              name="startLocation.latitude"
+              className={`w-full px-4 py-2 border ${
+                formik.errors.startLocation?.latitude && formik.touched.startLocation?.latitude
+                  ? "border-red-400"
+                  : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              value={formik.values.startLocation.latitude}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.startLocation?.latitude && formik.errors.startLocation?.latitude && (
+              <p className="text-red-500 text-xs mt-2">{formik.errors.startLocation.latitude}</p>
+            )}
+          </div>
+
+          {/* Longitud de Inicio */}
+          <div className="mb-6">
+            <label htmlFor="startLocation.longitude" className="block text-gray-700 text-sm font-semibold mb-2">
+              Longitud de Inicio
+            </label>
+            <input
+              type="number"
+              id="startLocation.longitude"
+              name="startLocation.longitude"
+              className={`w-full px-4 py-2 border ${
+                formik.errors.startLocation?.longitude && formik.touched.startLocation?.longitude
+                  ? "border-red-400"
+                  : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              value={formik.values.startLocation.longitude}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.startLocation?.longitude && formik.errors.startLocation?.longitude && (
+              <p className="text-red-500 text-xs mt-2">{formik.errors.startLocation.longitude}</p>
+            )}
+          </div>
+
+          {/* Latitud de Destino */}
+          <div className="mb-6">
+            <label htmlFor="endLocation.latitude" className="block text-gray-700 text-sm font-semibold mb-2">
+              Latitud de Destino
+            </label>
+            <input
+              type="number"
+              id="endLocation.latitude"
+              name="endLocation.latitude"
+              className={`w-full px-4 py-2 border ${
+                formik.errors.endLocation?.latitude && formik.touched.endLocation?.latitude
+                  ? "border-red-400"
+                  : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              value={formik.values.endLocation.latitude}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.endLocation?.latitude && formik.errors.endLocation?.latitude && (
+              <p className="text-red-500 text-xs mt-2">{formik.errors.endLocation.latitude}</p>
+            )}
+          </div>
+
+          {/* Longitud de Destino */}
+          <div className="mb-6">
+            <label htmlFor="endLocation.longitude" className="block text-gray-700 text-sm font-semibold mb-2">
+              Longitud de Destino
+            </label>
+            <input
+              type="number"
+              id="endLocation.longitude"
+              name="endLocation.longitude"
+              className={`w-full px-4 py-2 border ${
+                formik.errors.endLocation?.longitude && formik.touched.endLocation?.longitude
+                  ? "border-red-400"
+                  : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              value={formik.values.endLocation.longitude}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.endLocation?.longitude && formik.errors.endLocation?.longitude && (
+              <p className="text-red-500 text-xs mt-2">{formik.errors.endLocation.longitude}</p>
+            )}
+          </div>
+
+                    {/* Botones */}
           <div className="flex justify-center gap-4 mt-6">
             <button
               type="submit"
