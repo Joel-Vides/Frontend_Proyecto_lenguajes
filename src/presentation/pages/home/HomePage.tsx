@@ -31,24 +31,23 @@ export const HomePage = () => {
   const selectedBus = busData.find(bus => bus.id === selectedBusId);
 
   return (
-    <div className="flex flex-col lg:flex-row h-screen">
-      {/* Listado y Buscar */}
-      <div className="p-4 lg:border-r lg:w-1/2 overflow-y-auto">
+    <div className="flex flex-col lg:flex-row h-[calc(100vh-64px)] bg-gray-100 px-6 py-6 gap-6">
+      {/* Panel izquierdo */}
+      <section className="lg:w-1/2 bg-white rounded-xl border border-gray-200 shadow-sm p-6 overflow-y-auto flex flex-col">
         <Title text="Buses disponibles" />
 
-        {/* Filtros para Búsqueda */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+        <div className="mt-4 mb-6 flex flex-wrap gap-4 items-center border-b pb-4">
           <input
             type="text"
             placeholder="Buscar bus..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full sm:w-1/2 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            className="flex-grow min-w-[200px] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-600"
           />
           <select
             value={pageSize}
             onChange={(e) => setPageSize(Number(e.target.value))}
-            className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-600"
           >
             {[5, 10, 25, 50].map(size => (
               <option key={size} value={size}>Mostrar {size}</option>
@@ -56,79 +55,83 @@ export const HomePage = () => {
           </select>
         </div>
 
-        {/* Tarjetas */}
-        {busData.length === 0 ? (
-          <p className="text-gray-500 italic">No hay buses disponibles</p>
-        ) : (
-          <div className="grid gap-4">
-            {busData.map(bus => (
-              <DashboardCard
-                key={bus.id}
-                title={`Bus ${bus.numeroBus}`}
-                icon={<BusFront size={48} />}
-                onClick={() => setSelectedBusId(bus.id)}
-                onEdit={() => navigate(`/buses/${bus.id}/edit`)}
-                onDelete={() => navigate(`/buses/${bus.id}/delete`)}
-              />
-            ))}
-          </div>
-        )}
+        <div className="flex-1">
+          {busData.length === 0 ? (
+            <p className="text-gray-500 italic">No hay buses disponibles</p>
+          ) : (
+            <div className="grid gap-4">
+              {busData.map(bus => (
+                <DashboardCard
+                  key={bus.id}
+                  title={`Bus ${bus.numeroBus}`}
+                  icon={<BusFront size={48} />}
+                  onClick={() => setSelectedBusId(bus.id)}
+                  onEdit={() => navigate(`/buses/${bus.id}/edit`)}
+                  onDelete={() => navigate(`/buses/${bus.id}/delete`)}
+                />
+              ))}
+            </div>
+          )}
+        </div>
 
-        {/* Paginación */}
-        <div className="flex items-center justify-between mt-6">
+        <div className="mt-8 flex items-center justify-between">
           <button
             disabled={page <= 1}
             onClick={() => setPage(page - 1)}
-            className="px-4 py-2 bg-cyan-600 text-white rounded-md disabled:opacity-50 hover:bg-cyan-700 transition"
+            className="px-4 py-2 bg-cyan-700 text-white rounded-md disabled:opacity-50 hover:bg-cyan-800 transition"
           >
             ← Anterior
           </button>
-          <span className="text-gray-700 font-semibold">
+          <span className="text-gray-700 font-medium">
             Página {page} de {totalPages}
           </span>
           <button
             disabled={page >= totalPages}
             onClick={() => setPage(page + 1)}
-            className="px-4 py-2 bg-cyan-600 text-white rounded-md disabled:opacity-50 hover:bg-cyan-700 transition"
+            className="px-4 py-2 bg-cyan-700 text-white rounded-md disabled:opacity-50 hover:bg-cyan-800 transition"
           >
             Siguiente →
           </button>
         </div>
+      </section>
 
-        {/* Botón para Crear Buses */}
-        <button
-          onClick={() => navigate("/buses/create")}
-          className="fixed bottom-8 left-8 bg-cyan-800 text-white rounded-full shadow-lg hover:bg-cyan-900 transition-all duration-300 flex items-center gap-2 group px-4 py-4"
-        >
-          <Plus size={24} />
-          <span className="max-w-0 opacity-0 overflow-hidden group-hover:max-w-xs group-hover:opacity-100 transition-all duration-300 text-sm font-semibold whitespace-nowrap">
-            Añadir Bus
-          </span>
-        </button>
-      </div>
-
-      {/* Detalles ede los Buses */}
-      <div className="p-4 lg:w-1/2 overflow-y-auto">
+      {/* Panel derecho */}
+      <section className="lg:w-1/2 bg-white rounded-xl border border-gray-200 shadow-sm p-6 overflow-y-auto">
         <Title text="Información del Bus" />
         {selectedBus ? (
-          <div>
-            <h2 className="text-2xl font-bold mb-2">Bus {selectedBus.numeroBus}</h2>
-            <p className="text-gray-700"><strong>Chofer:</strong> {selectedBus.chofer}</p>
-            <p className="text-gray-700"><strong>Modelo:</strong> {selectedBus.modelo}</p>
-            <p className="text-gray-700"><strong>Año:</strong> {selectedBus.anio}</p>
+          <div className="mt-4 space-y-3 text-gray-800">
+            <h2 className="text-2xl font-bold border-b pb-2">
+              Bus {selectedBus.numeroBus}
+            </h2>
+            <p><strong>Chofer:</strong> {selectedBus.chofer}</p>
+            <p><strong>Modelo:</strong> {selectedBus.modelo}</p>
+            <p><strong>Año:</strong> {selectedBus.anio}</p>
           </div>
         ) : (
-          <p className="text-gray-500 italic">Selecciona un bus para ver sus detalles</p>
+          <p className="text-gray-500 italic mt-4">
+            Selecciona un bus para ver sus detalles
+          </p>
         )}
-      </div>
+      </section>
 
-      {/* Botón para los Tickets */}
+      {/* Botón flotante: Añadir Bus */}
+      <button
+        onClick={() => navigate("/buses/create")}
+        className="fixed bottom-6 left-6 bg-cyan-800 text-white rounded-full w-14 h-14 shadow-lg hover:shadow-xl hover:bg-cyan-900 transition-all flex items-center justify-center group"
+      >
+        <Plus size={24} />
+        <span className="absolute left-16 bg-cyan-800 text-white px-3 py-1 rounded-md text-sm font-medium opacity-0 group-hover:opacity-100 transition duration-300 whitespace-nowrap shadow">
+          Añadir Bus
+        </span>
+      </button>
+
+      {/* Botón flotante: Comprar Ticket */}
       <button
         onClick={() => navigate("/tickets/create")}
-        className="fixed bottom-8 right-8 bg-cyan-800 text-white rounded-full shadow-lg hover:bg-cyan-900 transition-all duration-300 flex items-center gap-2 group px-4 py-4"
+        className="fixed bottom-6 right-6 bg-cyan-800 text-white rounded-full w-14 h-14 shadow-lg hover:shadow-xl hover:bg-cyan-900 transition-all flex items-center justify-center group"
       >
         <Ticket size={24} />
-        <span className="max-w-0 opacity-0 overflow-hidden group-hover:max-w-xs group-hover:opacity-100 transition-all duration-300 text-sm font-semibold whitespace-nowrap">
+        <span className="absolute right-16 bg-cyan-800 text-white px-3 py-1 rounded-md text-sm font-medium opacity-0 group-hover:opacity-100 transition duration-300 whitespace-nowrap shadow">
           Comprar Ticket
         </span>
       </button>

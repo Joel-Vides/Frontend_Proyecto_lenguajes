@@ -35,7 +35,7 @@ export const useBuses = (busId?: string) => {
         mutationFn: (bus: BusModel) => createBusAction(bus),
         onSuccess: (data) => {
             if (data.status) {
-                navigate("/buses");
+                navigate("/");
             }
         },
         onError: (data) => {

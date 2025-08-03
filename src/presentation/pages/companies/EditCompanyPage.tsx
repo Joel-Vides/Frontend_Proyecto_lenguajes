@@ -4,14 +4,13 @@ import { FormikProvider, useFormik } from "formik";
 import { useEffect } from "react";
 import { Loader } from "lucide-react";
 import { Title } from "../../components/shared/Title";
-import { companyInitialValues, companyValidationSchema } from "../../../infrastructure/interfaces/validations/company.validation";
+import {
+  companyInitialValues,
+  companyValidationSchema,
+} from "../../../infrastructure/interfaces/validations/company.validation";
 
 export const EditCompanyPage = () => {
-
   const { companyId } = useParams();
-
-  // console.log(countryId);
-
   const { oneCompanyQuery, editCompanyMutation } = useCompanies(companyId);
 
   const formik = useFormik({
@@ -21,7 +20,7 @@ export const EditCompanyPage = () => {
     validateOnBlur: true,
     onSubmit: async (formValues) => {
       editCompanyMutation.mutate(formValues);
-    }
+    },
   });
 
   useEffect(() => {
@@ -29,105 +28,134 @@ export const EditCompanyPage = () => {
       const { name, email, phoneNumber } = oneCompanyQuery.data.data;
 
       formik.setValues({
-        name: name,
-        email: email,
-        phoneNumber: phoneNumber
+        name,
+        email,
+        phoneNumber,
       });
     }
   }, [oneCompanyQuery.isFetched, oneCompanyQuery.data]);
 
   if (oneCompanyQuery.isLoading) {
-    return <Loader />
+    return (
+      <div className="flex justify-center items-center h-[300px]">
+        <Loader className="animate-spin text-cyan-600" size={32} />
+      </div>
+    );
   }
 
   return (
-    <div className="w-full flex flex-col">
+    <div className="w-full flex flex-col items-center px-4">
       <Title text="Editar Empresa" />
 
       {editCompanyMutation.isError && (
-        <div className="bg-red-200 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mt-4 w-full max-w-2xl">
           <span>{editCompanyMutation.error.message}</span>
         </div>
       )}
 
-      <FormikProvider value={formik} >
-        <form onSubmit={formik.handleSubmit} className="mt-6 w-full">
-          <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">
+      <FormikProvider value={formik}>
+        <form
+          onSubmit={formik.handleSubmit}
+          className="mt-6 w-full max-w-2xl bg-white rounded-xl shadow-md p-6 border border-gray-200"
+        >
+          {/* Nombre */}
+          <div className="mb-6">
+            <label
+              htmlFor="name"
+              className="block text-gray-700 text-sm font-semibold mb-2"
+            >
               Nombre
             </label>
             <input
               type="text"
               id="name"
               name="name"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-cyan-500 leading-tight focus:outline-none"
+              className={`w-full px-4 py-2 border ${
+                formik.errors.name && formik.touched.name
+                  ? "border-red-400"
+                  : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.name}
               onChange={formik.handleChange}
             />
             {formik.touched.name && formik.errors.name && (
-              <div className="text-red-500 text-xs mt-1">
+              <p className="text-red-500 text-xs mt-2">
                 {formik.errors.name}
-              </div>
+              </p>
             )}
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
+          {/* Correo */}
+          <div className="mb-6">
+            <label
+              htmlFor="email"
+              className="block text-gray-700 text-sm font-semibold mb-2"
+            >
               Correo Electrónico
             </label>
             <input
               type="text"
               id="email"
               name="email"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-cyan-500 leading-tight focus:outline-none"
+              className={`w-full px-4 py-2 border ${
+                formik.errors.email && formik.touched.email
+                  ? "border-red-400"
+                  : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.email}
               onChange={formik.handleChange}
             />
             {formik.touched.email && formik.errors.email && (
-              <div className="text-red-500 text-xs mt-1">
+              <p className="text-red-500 text-xs mt-2">
                 {formik.errors.email}
-              </div>
+              </p>
             )}
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="phoneNumber" className="block text-gray-700 text-sm font-bold mb-2">
-              Número
+          {/* Número */}
+          <div className="mb-6">
+            <label
+              htmlFor="phoneNumber"
+              className="block text-gray-700 text-sm font-semibold mb-2"
+            >
+              Teléfono
             </label>
             <input
               type="text"
               id="phoneNumber"
               name="phoneNumber"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-cyan-500 leading-tight focus:outline-none"
+              className={`w-full px-4 py-2 border ${
+                formik.errors.phoneNumber && formik.touched.phoneNumber
+                  ? "border-red-400"
+                  : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.phoneNumber}
               onChange={formik.handleChange}
             />
             {formik.touched.phoneNumber && formik.errors.phoneNumber && (
-              <div className="text-red-500 text-xs mt-1">
+              <p className="text-red-500 text-xs mt-2">
                 {formik.errors.phoneNumber}
-              </div>
+              </p>
             )}
           </div>
 
-          <div className="flex items-center content-center justify-center gap-2">
+          {/* Botones */}
+          <div className="flex justify-center gap-4 mt-6">
             <button
               type="submit"
-              className="bg-cyan-700 hover:bg-cyan-800 text-white font-bold py-2 px-4 rounded focus:outline-none"
+              className="bg-cyan-700 hover:bg-cyan-800 text-white font-semibold py-2 px-5 rounded-lg transition"
             >
               Guardar
             </button>
-
             <Link
               to="/companies"
-              className="bg-cyan-700 hover:bg-cyan-800 text-white font-bold py-2 px-4 rounded focus:outline-none"
+              className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-5 rounded-lg transition"
             >
               Regresar
             </Link>
           </div>
-
         </form>
       </FormikProvider>
-
     </div>
-  )
-}
+  );
+};

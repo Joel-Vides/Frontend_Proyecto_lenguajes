@@ -5,96 +5,116 @@ import { Title } from "../../components/shared/Title";
 import { Link } from "react-router";
 
 export const CreateCompanyPage = () => {
+  const { createCompanyMutation } = useCompanies();
 
-    const { createCompanyMutation } = useCompanies();
+  const formik = useFormik({
+    initialValues: companyInitialValues,
+    validationSchema: companyValidationSchema,
+    validateOnChange: true,
+    validateOnBlur: true,
+    onSubmit: async (formValues) => {
+      createCompanyMutation.mutate(formValues);
+    },
+  });
 
-    const formik = useFormik({
-        initialValues: companyInitialValues,
-        validationSchema: companyValidationSchema,
-        validateOnChange: true,
-        validateOnBlur: true,
-        onSubmit: async (formValues) => {
-            createCompanyMutation.mutate(formValues);
-        }
-    })
+  return (
+    <div className="w-full flex flex-col items-center px-4">
+      <Title text="Registrar Nueva Empresa" />
 
-    return (
-        <div className="w-full flex flex-col"><Title text="Ingresar Empresa" />
-
-            {createCompanyMutation.isError && (
-                <div className="bg-red-200 border border-red-400 text-red-700 px-4 py-3 rounded">
-                    <span>{createCompanyMutation.error.message}</span>
-                </div>
-            )}
-
-            <FormikProvider value={formik}>
-                <form onSubmit={formik.handleSubmit} className="mt-6 w-full">
-                    {/* Nombre */}
-                    <div className="mb-4">
-                        <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">
-                            Nombre
-                        </label>
-                        <input type="text"
-                            id="name"
-                            name="name"
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-cyan-800 leading-tight focus:outline-none"
-                            value={formik.values.name}
-                            onChange={formik.handleChange} />
-                        {formik.touched.name && formik.errors.name && (
-                            <div className="text-red-500 text-xs mt-1">
-                                {formik.errors.name}
-                            </div>
-                        )}
-                    </div>
-                    {/* Email */}
-                    <div className="mb-4">
-                        <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
-                            Email
-                        </label>
-                        <input type="text"
-                            id="email"
-                            name="email"
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-cyan-800 leading-tight focus:outline-none"
-                            value={formik.values.email}
-                            onChange={formik.handleChange} />
-                        {formik.touched.email && formik.errors.email && (
-                            <div className="text-red-500 text-xs mt-1">
-                                {formik.errors.email}
-                            </div>
-                        )}
-                    </div>
-                    {/* Numero */}
-                    <div className="mb-4">
-                        <label htmlFor="phoneNumber" className="block text-gray-700 text-sm font-bold mb-2">
-                            Número
-                        </label>
-                        <input type="text"
-                            id="phoneNumber"
-                            name="phoneNumber"
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-cyan-800 leading-tight focus:outline-none"
-                            value={formik.values.phoneNumber}
-                            onChange={formik.handleChange} />
-                        {formik.touched.phoneNumber && formik.errors.phoneNumber && (
-                            <div className="text-red-500 text-xs mt-1">
-                                {formik.errors.phoneNumber}
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="flex items-center content-center justify-center gap-2">
-                        <button type="submit" className="bg-cyan-800 hover:bg-cyan-900 text-white font-bold py-2 px-4 rounded focus:outline-none">
-                            Guardar
-                        </button>
-
-                        <Link to="/companies"
-                            className="bg-cyan-800 hover:bg-cyan-900 text-white font-bold py-2 px-4 rounded focus:outline-none">
-                            Regresar
-                        </Link>
-                    </div>
-
-                </form>
-            </FormikProvider>
-
+      {createCompanyMutation.isError && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mt-4 w-full max-w-2xl">
+          <span>{createCompanyMutation.error.message}</span>
         </div>
-    )
-}
+      )}
+
+      <FormikProvider value={formik}>
+        <form
+          onSubmit={formik.handleSubmit}
+          className="mt-6 w-full max-w-2xl bg-white rounded-xl shadow-md p-6 border border-gray-200"
+        >
+          {/* Nombre */}
+          <div className="mb-6">
+            <label htmlFor="name" className="block text-gray-700 text-sm font-semibold mb-2">
+              Nombre
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              className={`w-full px-4 py-2 border ${
+                formik.errors.name && formik.touched.name
+                  ? "border-red-400"
+                  : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              value={formik.values.name}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.name && formik.errors.name && (
+              <p className="text-red-500 text-xs mt-2">{formik.errors.name}</p>
+            )}
+          </div>
+
+          {/* Email */}
+          <div className="mb-6">
+            <label htmlFor="email" className="block text-gray-700 text-sm font-semibold mb-2">
+              Correo Electrónico
+            </label>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              className={`w-full px-4 py-2 border ${
+                formik.errors.email && formik.touched.email
+                  ? "border-red-400"
+                  : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              value={formik.values.email}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.email && formik.errors.email && (
+              <p className="text-red-500 text-xs mt-2">{formik.errors.email}</p>
+            )}
+          </div>
+
+          {/* Número */}
+          <div className="mb-6">
+            <label htmlFor="phoneNumber" className="block text-gray-700 text-sm font-semibold mb-2">
+              Teléfono
+            </label>
+            <input
+              type="text"
+              id="phoneNumber"
+              name="phoneNumber"
+              className={`w-full px-4 py-2 border ${
+                formik.errors.phoneNumber && formik.touched.phoneNumber
+                  ? "border-red-400"
+                  : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              value={formik.values.phoneNumber}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.phoneNumber && formik.errors.phoneNumber && (
+              <p className="text-red-500 text-xs mt-2">{formik.errors.phoneNumber}</p>
+            )}
+          </div>
+
+          {/* Botones */}
+          <div className="flex justify-center gap-4 mt-6">
+            <button
+              type="submit"
+              className="bg-cyan-700 hover:bg-cyan-800 text-white font-semibold py-2 px-5 rounded-lg transition"
+            >
+              Guardar
+            </button>
+            <Link
+              to="/companies"
+              className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-5 rounded-lg transition"
+            >
+              Regresar
+            </Link>
+          </div>
+        </form>
+      </FormikProvider>
+    </div>
+  );
+};
