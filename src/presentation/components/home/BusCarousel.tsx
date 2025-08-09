@@ -24,7 +24,7 @@ export const BusCarousel = ({ buses }: Props) => {
 
     const { scrollLeft, clientWidth, scrollWidth } = el;
 
-    // 🔁 Scroll infinito: rebote circular
+    // Scroll infinito: rebote circular
     if (offset > 0 && scrollLeft + clientWidth >= scrollWidth - 5) {
       el.scrollTo({ left: 0, behavior: "smooth" });
     } else if (offset < 0 && scrollLeft <= 5) {
@@ -34,7 +34,7 @@ export const BusCarousel = ({ buses }: Props) => {
     }
   };
 
-  // 🔄 Auto-scroll con pausa por hover
+  // Auto-scroll con pausa por hover
   useEffect(() => {
     if (!isHovered) {
       intervalRef.current = window.setInterval(() => {
@@ -49,7 +49,7 @@ export const BusCarousel = ({ buses }: Props) => {
     };
   }, [isHovered]);
 
-  // 🎯 Actualiza el índice activo (indicadores)
+  // Actualiza el índice activo (indicadores)
   const updateActiveIndex = () => {
     const el = scrollRef.current;
     if (!el) return;
@@ -72,7 +72,7 @@ export const BusCarousel = ({ buses }: Props) => {
     <div
       className="relative w-full max-h-[340px] overflow-hidden flex flex-col justify-between"
     >
-      {/* ⬅️ Flecha izquierda */}
+      {/*  Flecha izquierda */}
       <button
         onClick={() => scrollBy(-300)}
         className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 border border-gray-200 hover:border-cyan-500 hover:shadow-md hover:bg-cyan-50 text-gray-600 hover:text-cyan-600 rounded-full p-2 transition-all"
@@ -80,7 +80,7 @@ export const BusCarousel = ({ buses }: Props) => {
         <ChevronLeft size={24} />
       </button>
 
-      {/* 🎠 Carrusel */}
+      {/* Carrusel */}
       <div
         ref={scrollRef}
         className="flex gap-4 px-10 py-4 overflow-x-scroll scroll-smooth"
@@ -106,7 +106,7 @@ export const BusCarousel = ({ buses }: Props) => {
         ))}
       </div>
 
-      {/* ➡️ Flecha derecha */}
+      {/* Flecha derecha */}
       <button
         onClick={() => scrollBy(300)}
         className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 border border-gray-200 hover:border-cyan-500 hover:shadow-md hover:bg-cyan-50 text-gray-600 hover:text-cyan-600 rounded-full p-2 transition-all"
@@ -114,7 +114,7 @@ export const BusCarousel = ({ buses }: Props) => {
         <ChevronRight size={24} />
       </button>
 
-      {/* 🔘 Indicadores visuales */}
+      {/* Indicadores visuales */}
       <div className="mt-1 mb-2 flex justify-center space-x-2">
         {buses.map((_, idx) => (
           <span

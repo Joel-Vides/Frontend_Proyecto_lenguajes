@@ -32,7 +32,7 @@ export const useBuses = (busId?: string) => {
     })
 
     const createBusMutation = useMutation({
-        mutationFn: (bus: BusModel) => createBusAction(bus),
+        mutationFn: (form: FormData) => createBusAction(form),
         onSuccess: (data) => {
             if (data.status) {
                 navigate("/");

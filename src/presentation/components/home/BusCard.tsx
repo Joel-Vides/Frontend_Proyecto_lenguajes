@@ -14,7 +14,7 @@ export const BusCard = ({
       onClick={onClick}
       className="cursor-pointer bg-white m-1 rounded-lg shadow-md flex flex-col overflow-hidden h-64 w-64"
     >
-      {/* 🖼️ Imagen - 40% del alto */}
+      {/* Imagen */}
       <div className="relative w-full h-[40%]">
         {imageUrl ? (
           <img
@@ -29,7 +29,7 @@ export const BusCard = ({
         )}
       </div>
 
-      {/* 📝 Información - 60% del alto */}
+      {/* Información */}
       <div className="h-[60%] px-4 flex items-center justify-center">
         <h2 className="text-lg font-[LexendDeca-Bold] text-gray-900 text-center">{title}</h2>
       </div>

@@ -30,6 +30,17 @@ export const HomePage = () => {
   const totalPages = Math.max(1, Math.ceil(totalBuses / pageSize));
   const selectedBus = busData.find(bus => bus.id === selectedBusId);
 
+// Quita el /api de tu VITE_API_URL para quedarte con la base del backend
+const API_BASE = import.meta.env.VITE_API_URL.replace(/\/api\/?$/, "");
+
+// Convierte cualquier path relativo en URL absoluta del backend
+const resolveImage = (src?: string) => {
+  if (!src) return undefined;
+  if (/^https?:\/\//i.test(src)) return src; // ya es absoluta
+  const needsSlash = src.startsWith("/") ? "" : "/";
+  return `${API_BASE}${needsSlash}${src}`;
+};
+
   return (
     <div className="flex flex-col lg:flex-row h-[calc(100vh-64px)] bg-gray-100 px-6 py-6 gap-6">
       {/* Panel izquierdo */}
@@ -65,6 +76,7 @@ export const HomePage = () => {
                   key={bus.id}
                   title={`Bus ${bus.numeroBus}`}
                   icon={<BusFront size={48} />}
+                  imageUrl={resolveImage(bus.imageUrl)}
                   onClick={() => setSelectedBusId(bus.id)}
                   onEdit={() => navigate(`/buses/${bus.id}/edit`)}
                   onDelete={() => navigate(`/buses/${bus.id}/delete`)}

@@ -27,11 +27,11 @@ export const BusMap = ({ start, end }: BusMapProps) => {
             attribution: '&copy; OpenStreetMap contributors',
         }).addTo(map);
 
-        // Marcadores de inicio y fin
+        // Marcadores de Inicio y Fin
         L.marker([start.latitude, start.longitude]).addTo(map).bindPopup("Inicio").openPopup();
         L.marker([end.latitude, end.longitude]).addTo(map).bindPopup("Destino");
 
-        // Línea entre los puntos
+        // Línea Entre los Puntos
         L.polyline([
             [start.latitude, start.longitude],
             [end.latitude, end.longitude],

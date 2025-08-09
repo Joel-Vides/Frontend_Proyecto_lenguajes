@@ -1,11 +1,12 @@
 import * as Yup from "yup";
 import type { BusModel } from "../../../core/models/bus.models";
 
-export const busInitialValues: BusModel = {
+export const busInitialValues = {
   numeroBus: "",
   chofer: "",
   modelo: "",
-  anio: 2023,
+  anio: 0,
+  companyId: "",
   startLocation: {
     latitude: 0,
     longitude: 0,
@@ -14,6 +15,7 @@ export const busInitialValues: BusModel = {
     latitude: 0,
     longitude: 0,
   },
+  image: null as File | null,
 };
 
 export const busValidationSchema: Yup.ObjectSchema<BusModel> = Yup.object({
@@ -40,6 +42,8 @@ export const busValidationSchema: Yup.ObjectSchema<BusModel> = Yup.object({
     .min(1900, "El año debe ser mayor a 1900")
     .max(2100, "El año debe ser menor o igual a 2100"),
 
+  companyId: Yup.string().required("La empresa es obligatoria"),
+
   startLocation: Yup.object().shape({
     latitude: Yup.number().required("La Latitud de inicio es requerida"),
     longitude: Yup.number().required("La Longitud de inicio es requerida"),
@@ -49,4 +53,15 @@ export const busValidationSchema: Yup.ObjectSchema<BusModel> = Yup.object({
     latitude: Yup.number().required("La Latitud de destino es requerida"),
     longitude: Yup.number().required("La Longitud de destino es requerida"),
   }),
+
+  image: Yup
+    .mixed<File>()
+    .nullable()
+    .required("La imagen del bus es requerida")
+    .test("fileSize", "La imagen debe pesar menos de 2 MB", (file) => {
+      return !file || file.size <= 2 * 1024 * 1024;
+    })
+    .test("fileType", "Formato no soportado", (file) => {
+      return !file || ["image/jpeg","image/png","image/webp"].includes(file.type);
+    }),
 });

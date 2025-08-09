@@ -4,10 +4,7 @@ import { FormikProvider, useFormik } from "formik";
 import { useEffect } from "react";
 import { Loader } from "lucide-react";
 import { Title } from "../../components/shared/Title";
-import {
-  companyInitialValues,
-  companyValidationSchema,
-} from "../../../infrastructure/interfaces/validations/company.validation";
+import { companyInitialValues, companyValidationSchema } from "../../../infrastructure/interfaces/validations/company.validation";
 
 export const EditCompanyPage = () => {
   const { companyId } = useParams();

@@ -11,4 +11,5 @@ export interface BusResponse {
   anio: number;
   startLocation?: Location;
   endLocation?: Location;
+  imageUrl?: string;
 }

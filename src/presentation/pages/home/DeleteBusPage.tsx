@@ -5,13 +5,13 @@ import { useBuses } from "../../hooks/useBuses";
 
 export const DeleteBusPage = () => {
   const { busId } = useParams();
-  const navigate = useNavigate(); // 🧭 Navegación mágica al HomePage
+  const navigate = useNavigate(); 
   const { oneBusQuery, deleteBusMutation } = useBuses(busId);
 
   const handleDelete = () => {
     deleteBusMutation.mutate(undefined, {
       onSuccess: () => {
-        navigate("/"); // 🚀 Redirige al HomePage tras eliminar
+        navigate("/"); // Redirige al HomePage tras eliminar
       },
     });
   };

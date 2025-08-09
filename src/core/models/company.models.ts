@@ -1,5 +1,5 @@
 export interface CompanyModel {
-    name:        string;
-    email:       string;
-    phoneNumber: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
 }
