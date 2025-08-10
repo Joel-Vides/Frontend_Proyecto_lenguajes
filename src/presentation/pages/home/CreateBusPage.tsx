@@ -224,7 +224,7 @@ export const CreateBusPage = () => {
             />
           </div>
 
-          {/* Coordenadas en solo lectura (para ver lo elegido) */}
+          {/* Coordenadas */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-gray-700 text-sm font-semibold mb-1">Inicio (lat, lon)</label>

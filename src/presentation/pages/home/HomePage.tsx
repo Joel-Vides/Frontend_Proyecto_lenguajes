@@ -1,4 +1,4 @@
-import { BusFront, Plus, Ticket } from "lucide-react";
+import { BusFront, Plus, Ticket, Route } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { BusMap } from "./BusMap";
@@ -30,7 +30,7 @@ export const HomePage = () => {
   const totalPages = Math.max(1, Math.ceil(totalBuses / pageSize));
   const selectedBus = busData.find((bus) => bus.id === selectedBusId);
 
-  // Base del backend (quita el /api final)
+  // Base del backend
   const API_BASE = import.meta.env.VITE_API_URL.replace(/\/api\/?$/, "");
   const resolveImage = (src?: string) => {
     if (!src) return undefined;
@@ -39,6 +39,7 @@ export const HomePage = () => {
     return `${API_BASE}${needsSlash}${src}`;
   };
 
+  // Parser simple
   const toNum = (v: unknown) => {
     if (v === null || v === undefined || v === "") return NaN;
     const n = Number(v);
@@ -47,6 +48,7 @@ export const HomePage = () => {
 
   return (
     <div className="flex flex-col lg:flex-row h-[calc(100vh-64px)] bg-gray-100 px-6 py-6 gap-6">
+
       {/* Panel izquierdo */}
       <section className="lg:w-1/2 bg-white rounded-xl border border-gray-200 shadow-sm p-6 overflow-y-auto flex flex-col">
         <Title text="Buses disponibles" />
@@ -117,7 +119,22 @@ export const HomePage = () => {
         {selectedBus ? (
           <>
             <div className="mt-4 space-y-3 text-gray-800">
-              <h2 className="text-2xl font-bold border-b pb-2">Bus {selectedBus.numeroBus}</h2>
+
+              {/* Header y Botón Editar Ruta */}
+              <div className="flex items-center justify-between border-b pb-2">
+                <h2 className="text-2xl font-bold">Bus {selectedBus.numeroBus}</h2>
+
+                <button
+                  type="button"
+                  onClick={() => navigate(`/buses/${selectedBus.id}/editRoute`)}
+                  className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-cyan-700 text-white hover:bg-cyan-800 transition"
+                  title="Editar ruta del bus"
+                >
+                  <Route size={18} />
+                  <span className="hidden sm:inline">Editar ruta</span>
+                </button>
+              </div>
+
               <p><strong>Chofer:</strong> {selectedBus.chofer}</p>
               <p><strong>Modelo:</strong> {selectedBus.modelo}</p>
               <p><strong>Año:</strong> {selectedBus.anio}</p>

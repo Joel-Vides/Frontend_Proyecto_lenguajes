@@ -8,6 +8,7 @@ import { DeleteCompanyPage } from "../presentation/pages/companies/DeleteCompany
 import { CreateBusPage } from "../presentation/pages/home/CreateBusPage"
 import { EditBusPage } from "../presentation/pages/home/EditBusPage"
 import { DeleteBusPage } from "../presentation/pages/home/DeleteBusPage"
+import { EditRouteBusPage } from "../presentation/pages/home/EditRouteBusPage"
 
 export const AppRouter = () => {
     return (
@@ -24,6 +25,7 @@ export const AppRouter = () => {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/buses/create" element={<CreateBusPage />}></Route>
                     <Route path="/buses/:busId/edit" element={<EditBusPage />}></Route>
+                    <Route path="/buses/:busId/editRoute" element={<EditRouteBusPage />}></Route>
                     <Route path="/buses/:busId/delete" element={<DeleteBusPage />}></Route>
 
                 </Route>
