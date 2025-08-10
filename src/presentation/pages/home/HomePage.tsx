@@ -1,10 +1,10 @@
 import { BusFront, Plus, Ticket } from "lucide-react";
 import { useEffect, useState } from "react";
-import { DashboardCard } from "../../components/home/DashBoardCard";
-import { Title } from "../../components/shared/Title";
 import { useNavigate } from "react-router";
-import { useBuses } from "../../hooks/useBuses";
 import { BusMap } from "./BusMap";
+import { useBuses } from "../../hooks/useBuses";
+import { Title } from "../../components/shared/Title";
+import { DashboardCard } from "../../components/home/DashBoardCard";
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -28,18 +28,22 @@ export const HomePage = () => {
   const busData = busesPaginationQuery.data?.data.items || [];
   const totalBuses = busesPaginationQuery.data?.data.totalItems || 0;
   const totalPages = Math.max(1, Math.ceil(totalBuses / pageSize));
-  const selectedBus = busData.find(bus => bus.id === selectedBusId);
+  const selectedBus = busData.find((bus) => bus.id === selectedBusId);
 
-// Quita el /api de tu VITE_API_URL para quedarte con la base del backend
-const API_BASE = import.meta.env.VITE_API_URL.replace(/\/api\/?$/, "");
+  // Base del backend (quita el /api final)
+  const API_BASE = import.meta.env.VITE_API_URL.replace(/\/api\/?$/, "");
+  const resolveImage = (src?: string) => {
+    if (!src) return undefined;
+    if (/^https?:\/\//i.test(src)) return src;
+    const needsSlash = src.startsWith("/") ? "" : "/";
+    return `${API_BASE}${needsSlash}${src}`;
+  };
 
-// Convierte cualquier path relativo en URL absoluta del backend
-const resolveImage = (src?: string) => {
-  if (!src) return undefined;
-  if (/^https?:\/\//i.test(src)) return src; // ya es absoluta
-  const needsSlash = src.startsWith("/") ? "" : "/";
-  return `${API_BASE}${needsSlash}${src}`;
-};
+  const toNum = (v: unknown) => {
+    if (v === null || v === undefined || v === "") return NaN;
+    const n = Number(v);
+    return Number.isFinite(n) ? n : NaN;
+  };
 
   return (
     <div className="flex flex-col lg:flex-row h-[calc(100vh-64px)] bg-gray-100 px-6 py-6 gap-6">
@@ -50,7 +54,7 @@ const resolveImage = (src?: string) => {
         <div className="mt-4 mb-6 flex flex-wrap gap-4 items-center border-b pb-4">
           <input
             type="text"
-            placeholder="Buscar bus..."
+            placeholder="Buscar bus."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="flex-grow min-w-[200px] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-600"
@@ -60,8 +64,10 @@ const resolveImage = (src?: string) => {
             onChange={(e) => setPageSize(Number(e.target.value))}
             className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-600"
           >
-            {[5, 10, 25, 50].map(size => (
-              <option key={size} value={size}>Mostrar {size}</option>
+            {[5, 10, 25, 50].map((size) => (
+              <option key={size} value={size}>
+                Mostrar {size}
+              </option>
             ))}
           </select>
         </div>
@@ -71,7 +77,7 @@ const resolveImage = (src?: string) => {
             <p className="text-gray-500 italic">No hay buses disponibles</p>
           ) : (
             <div className="grid gap-4">
-              {busData.map(bus => (
+              {busData.map((bus) => (
                 <DashboardCard
                   key={bus.id}
                   title={`Bus ${bus.numeroBus}`}
@@ -94,9 +100,7 @@ const resolveImage = (src?: string) => {
           >
             ← Anterior
           </button>
-          <span className="text-gray-700 font-medium">
-            Página {page} de {totalPages}
-          </span>
+          <span className="text-gray-700 font-medium">Página {page} de {totalPages}</span>
           <button
             disabled={page >= totalPages}
             onClick={() => setPage(page + 1)}
@@ -113,9 +117,7 @@ const resolveImage = (src?: string) => {
         {selectedBus ? (
           <>
             <div className="mt-4 space-y-3 text-gray-800">
-              <h2 className="text-2xl font-bold border-b pb-2">
-                Bus {selectedBus.numeroBus}
-              </h2>
+              <h2 className="text-2xl font-bold border-b pb-2">Bus {selectedBus.numeroBus}</h2>
               <p><strong>Chofer:</strong> {selectedBus.chofer}</p>
               <p><strong>Modelo:</strong> {selectedBus.modelo}</p>
               <p><strong>Año:</strong> {selectedBus.anio}</p>
@@ -124,20 +126,18 @@ const resolveImage = (src?: string) => {
             <div className="mt-6">
               <BusMap
                 start={{
-                  latitude: selectedBus.startLocation?.latitude ?? 0,
-                  longitude: selectedBus.startLocation?.longitude ?? 0,
+                  latitude: toNum(selectedBus.startLocation?.latitude),
+                  longitude: toNum(selectedBus.startLocation?.longitude),
                 }}
                 end={{
-                  latitude: selectedBus.endLocation?.latitude ?? 0,
-                  longitude: selectedBus.endLocation?.longitude ?? 0,
+                  latitude: toNum(selectedBus.endLocation?.latitude),
+                  longitude: toNum(selectedBus.endLocation?.longitude),
                 }}
               />
             </div>
           </>
         ) : (
-          <p className="text-gray-500 italic mt-4">
-            Selecciona un bus para ver sus detalles
-          </p>
+          <p className="text-gray-500 italic mt-4">Selecciona un bus para ver sus detalles</p>
         )}
       </section>
 

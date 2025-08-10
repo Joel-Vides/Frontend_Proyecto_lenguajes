@@ -12,13 +12,20 @@ export const CreateBusPage = () => {
   const [companies, setEmpresas] = useState<CompanyResponse[]>([]);
   const [preview, setPreview] = useState<string>("");
 
+  const toFormNumber = (v: unknown) => {
+    if (v === null || v === undefined) return "";
+    const n = typeof v === "number" ? v : parseFloat(String(v).replace(",", "."));
+    return Number.isFinite(n) ? String(n).replace(".", ",") : "";
+  };
+
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_URL}/companies`)
-      .then(res => {
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/companies`)
+      .then((res) => {
         console.log("Empresas recibidas:", res.data);
         setEmpresas(res.data.data.items);
       })
-      .catch(err => console.error("Error al cargar empresas", err));
+      .catch((err) => console.error("Error al cargar empresas", err));
   }, []);
 
   const formik = useFormik({
@@ -35,15 +42,15 @@ export const CreateBusPage = () => {
       form.append("anio", String(values.anio));
       form.append("companyId", values.companyId);
 
-      form.append("StartLocation.Latitude", String(values.startLocation.latitude));
-      form.append("StartLocation.Longitude", String(values.startLocation.longitude));
-      form.append("EndLocation.Latitude", String(values.endLocation.latitude));
-      form.append("EndLocation.Longitude", String(values.endLocation.longitude));
+      form.append("StartLocation.Latitude",  toFormNumber(values.startLocation.latitude));
+      form.append("StartLocation.Longitude", toFormNumber(values.startLocation.longitude));
+      form.append("EndLocation.Latitude",    toFormNumber(values.endLocation.latitude));
+      form.append("EndLocation.Longitude",   toFormNumber(values.endLocation.longitude));
 
-      if (values.image) form.append("image", values.image); // el archivo
+      if (values.image) form.append("image", values.image);
 
       createBusMutation.mutate(form);
-    }
+    },
   });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,8 +89,9 @@ export const CreateBusPage = () => {
               type="text"
               id="numeroBus"
               name="numeroBus"
-              className={`w-full px-4 py-2 border ${formik.errors.numeroBus && formik.touched.numeroBus ? "border-red-400" : "border-gray-300"
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${
+                formik.errors.numeroBus && formik.touched.numeroBus ? "border-red-400" : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.numeroBus}
               onChange={formik.handleChange}
             />
@@ -101,8 +109,9 @@ export const CreateBusPage = () => {
               type="text"
               id="chofer"
               name="chofer"
-              className={`w-full px-4 py-2 border ${formik.errors.chofer && formik.touched.chofer ? "border-red-400" : "border-gray-300"
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${
+                formik.errors.chofer && formik.touched.chofer ? "border-red-400" : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.chofer}
               onChange={formik.handleChange}
             />
@@ -120,8 +129,9 @@ export const CreateBusPage = () => {
               type="text"
               id="modelo"
               name="modelo"
-              className={`w-full px-4 py-2 border ${formik.errors.modelo && formik.touched.modelo ? "border-red-400" : "border-gray-300"
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${
+                formik.errors.modelo && formik.touched.modelo ? "border-red-400" : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.modelo}
               onChange={formik.handleChange}
             />
@@ -139,8 +149,9 @@ export const CreateBusPage = () => {
               type="text"
               id="anio"
               name="anio"
-              className={`w-full px-4 py-2 border ${formik.errors.anio && formik.touched.anio ? "border-red-400" : "border-gray-300"
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${
+                formik.errors.anio && formik.touched.anio ? "border-red-400" : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.anio}
               onChange={formik.handleChange}
             />
@@ -160,8 +171,9 @@ export const CreateBusPage = () => {
               value={formik.values.companyId}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full px-4 py-2 border ${formik.errors.companyId && formik.touched.companyId ? "border-red-400" : "border-gray-300"
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${
+                formik.errors.companyId && formik.touched.companyId ? "border-red-400" : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               required
             >
               <option value="">Seleccione una empresa</option>
@@ -192,12 +204,10 @@ export const CreateBusPage = () => {
             {formik.errors.image && formik.touched.image && (
               <p className="text-red-500 text-xs mt-2">{formik.errors.image}</p>
             )}
-            {preview && (
-              <img src={preview} alt="Preview" className="mt-4 max-h-48 object-contain" />
-            )}
+            {preview && <img src={preview} alt="Preview" className="mt-4 max-h-48 object-contain" />}
           </div>
 
-          {/* Latitud de Inicio */}
+          {/* Lat/Lon inicio y destino */}
           <div className="mb-6">
             <label htmlFor="startLocation.latitude" className="block text-gray-700 text-sm font-semibold mb-2">
               Latitud de Inicio
@@ -206,10 +216,11 @@ export const CreateBusPage = () => {
               type="number"
               id="startLocation.latitude"
               name="startLocation.latitude"
-              className={`w-full px-4 py-2 border ${formik.errors.startLocation?.latitude && formik.touched.startLocation?.latitude
-                ? "border-red-400"
-                : "border-gray-300"
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${
+                formik.errors.startLocation?.latitude && formik.touched.startLocation?.latitude
+                  ? "border-red-400"
+                  : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.startLocation.latitude}
               onChange={formik.handleChange}
             />
@@ -218,7 +229,6 @@ export const CreateBusPage = () => {
             )}
           </div>
 
-          {/* Longitud de Inicio */}
           <div className="mb-6">
             <label htmlFor="startLocation.longitude" className="block text-gray-700 text-sm font-semibold mb-2">
               Longitud de Inicio
@@ -227,10 +237,11 @@ export const CreateBusPage = () => {
               type="number"
               id="startLocation.longitude"
               name="startLocation.longitude"
-              className={`w-full px-4 py-2 border ${formik.errors.startLocation?.longitude && formik.touched.startLocation?.longitude
-                ? "border-red-400"
-                : "border-gray-300"
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${
+                formik.errors.startLocation?.longitude && formik.touched.startLocation?.longitude
+                  ? "border-red-400"
+                  : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.startLocation.longitude}
               onChange={formik.handleChange}
             />
@@ -239,7 +250,6 @@ export const CreateBusPage = () => {
             )}
           </div>
 
-          {/* Latitud de Destino */}
           <div className="mb-6">
             <label htmlFor="endLocation.latitude" className="block text-gray-700 text-sm font-semibold mb-2">
               Latitud de Destino
@@ -248,10 +258,11 @@ export const CreateBusPage = () => {
               type="number"
               id="endLocation.latitude"
               name="endLocation.latitude"
-              className={`w-full px-4 py-2 border ${formik.errors.endLocation?.latitude && formik.touched.endLocation?.latitude
-                ? "border-red-400"
-                : "border-gray-300"
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${
+                formik.errors.endLocation?.latitude && formik.touched.endLocation?.latitude
+                  ? "border-red-400"
+                  : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.endLocation.latitude}
               onChange={formik.handleChange}
             />
@@ -260,7 +271,6 @@ export const CreateBusPage = () => {
             )}
           </div>
 
-          {/* Longitud de Destino */}
           <div className="mb-6">
             <label htmlFor="endLocation.longitude" className="block text-gray-700 text-sm font-semibold mb-2">
               Longitud de Destino
@@ -269,10 +279,11 @@ export const CreateBusPage = () => {
               type="number"
               id="endLocation.longitude"
               name="endLocation.longitude"
-              className={`w-full px-4 py-2 border ${formik.errors.endLocation?.longitude && formik.touched.endLocation?.longitude
-                ? "border-red-400"
-                : "border-gray-300"
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${
+                formik.errors.endLocation?.longitude && formik.touched.endLocation?.longitude
+                  ? "border-red-400"
+                  : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.endLocation.longitude}
               onChange={formik.handleChange}
             />
@@ -281,20 +292,12 @@ export const CreateBusPage = () => {
             )}
           </div>
 
-
           {/* Botones */}
           <div className="flex justify-center gap-4 mt-6">
-            <button
-              type="submit"
-              className="bg-cyan-700 hover:bg-cyan-800 text-white font-semibold py-2 px-5 rounded-lg transition"
-            >
+            <button type="submit" className="bg-cyan-700 hover:bg-cyan-800 text-white font-semibold py-2 px-5 rounded-lg transition">
               Guardar
             </button>
-
-            <Link
-              to="/"
-              className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-5 rounded-lg transition"
-            >
+            <Link to="/" className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-5 rounded-lg transition">
               Regresar
             </Link>
           </div>
