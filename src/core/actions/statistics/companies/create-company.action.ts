@@ -5,7 +5,7 @@ import type { CompanyModel } from "../../../models/company.models";
 import type { ApiErrorResponse } from "../../../../infrastructure/interfaces/api-error.response";
 
 export const createCompanyAction = async (
-    company: CompanyModel
+    form: CompanyModel | FormData
 ): Promise<ApiResponse<CompanyModel>> => {
 
     try {
@@ -13,7 +13,7 @@ export const createCompanyAction = async (
         const { data } = await busesApi
             .post<ApiResponse<CompanyModel>>(
                 "/companies",
-                company
+                form
             );
 
         return data;

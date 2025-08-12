@@ -113,5 +113,5 @@ export const BusMap = ({ start, end }: BusMapProps) => {
     setTimeout(() => map.invalidateSize(), 0);
   }, [start, end]);
 
-  return <div ref={containerRef} className="h-64 rounded-md shadow-md overflow-hidden" />;
+  return <div ref={containerRef} className="h-85 rounded-md shadow-md overflow-hidden" />;
 };

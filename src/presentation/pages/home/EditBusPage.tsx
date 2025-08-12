@@ -25,7 +25,7 @@ export const EditBusPage = () => {
   const formik = useFormik({
     initialValues: {
       ...busInitialValues,
-      image: null as File | null, 
+      image: null as File | null,
     },
     validationSchema: busValidationSchema,
     validateOnChange: true,
@@ -122,9 +122,8 @@ export const EditBusPage = () => {
               type="text"
               id="numeroBus"
               name="numeroBus"
-              className={`w-full px-4 py-2 border ${
-                formik.errors.numeroBus && formik.touched.numeroBus ? "border-red-400" : "border-gray-300"
-              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${formik.errors.numeroBus && formik.touched.numeroBus ? "border-red-400" : "border-gray-300"
+                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.numeroBus}
               onChange={formik.handleChange}
             />
@@ -140,9 +139,8 @@ export const EditBusPage = () => {
               type="text"
               id="chofer"
               name="chofer"
-              className={`w-full px-4 py-2 border ${
-                formik.errors.chofer && formik.touched.chofer ? "border-red-400" : "border-gray-300"
-              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${formik.errors.chofer && formik.touched.chofer ? "border-red-400" : "border-gray-300"
+                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.chofer}
               onChange={formik.handleChange}
             />
@@ -158,9 +156,8 @@ export const EditBusPage = () => {
               type="text"
               id="modelo"
               name="modelo"
-              className={`w-full px-4 py-2 border ${
-                formik.errors.modelo && formik.touched.modelo ? "border-red-400" : "border-gray-300"
-              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${formik.errors.modelo && formik.touched.modelo ? "border-red-400" : "border-gray-300"
+                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.modelo}
               onChange={formik.handleChange}
             />
@@ -176,9 +173,8 @@ export const EditBusPage = () => {
               type="number"
               id="anio"
               name="anio"
-              className={`w-full px-4 py-2 border ${
-                formik.errors.anio && formik.touched.anio ? "border-red-400" : "border-gray-300"
-              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${formik.errors.anio && formik.touched.anio ? "border-red-400" : "border-gray-300"
+                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.anio}
               onChange={formik.handleChange}
             />
@@ -198,7 +194,9 @@ export const EditBusPage = () => {
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="block"
+              className="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4
+                        file:rounded-md file:border-0 file:text-sm file:font-semibold
+                        file:bg-cyan-50 file:text-cyan-700 hover:file:bg-cyan-100"
             />
             {/* preview (muestra actual o nueva) */}
             {preview && (

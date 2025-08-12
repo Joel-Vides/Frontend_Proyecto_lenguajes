@@ -1,3 +1,4 @@
+// ...imports iguales
 import { Briefcase } from "lucide-react";
 import { useEffect, useState } from "react";
 import { DashboardCard } from "../../components/home/DashBoardCard";
@@ -10,8 +11,10 @@ interface RawBus {
   id: string;
   numeroBus: string;
   modelo?: string;
+  chofer?: string;
+  anio?: number;
   companyId: string;
-  imageUrl?: string; // Viene del backend
+  imageUrl?: string;
 }
 
 export const CompaniesPage = () => {
@@ -29,10 +32,10 @@ export const CompaniesPage = () => {
 
   const [selectedCompanyId, setSelectedCompanyId] = useState<string | null>(null);
   const [busesByCompany, setBusesByCompany] = useState<
-    Array<{ id: string; title: string; imageUrl?: string }>
+    Array<{ id: string; numeroBus?: string; chofer?: string; modelo?: string; anio?: number | string; imageUrl?: string; }>
   >([]);
 
-  // base del backend (quita /api del VITE_API_URL)
+  // base para rutas absolutas
   const API_BASE = import.meta.env.VITE_API_URL.replace(/\/api\/?$/, "");
   const resolveImage = (src?: string) => {
     if (!src) return undefined;
@@ -41,12 +44,10 @@ export const CompaniesPage = () => {
     return `${API_BASE}${needsSlash}${src}`;
   };
 
-  // Cargo las empresas al montar
   useEffect(() => {
     refreshCompanies();
   }, [refreshCompanies]);
 
-  // Cada vez que cambie la empresa seleccionada, hago fetch incluyendo un pageSize > 0
   useEffect(() => {
     if (!selectedCompanyId) {
       setBusesByCompany([]);
@@ -60,13 +61,14 @@ export const CompaniesPage = () => {
         const json = await res.json();
         const raw: RawBus[] = json.data?.items || [];
 
-        // Ya vienen filtrados, pero por si acaso…
         const filtered = raw.filter((bus) => bus.companyId === selectedCompanyId);
-
         const mapped = filtered.map((bus) => ({
           id: bus.id,
-          title: bus.numeroBus,
-          imageUrl: resolveImage(bus.imageUrl), // usar la imagen real
+          numeroBus: bus.numeroBus,
+          chofer: bus.chofer,
+          modelo: bus.modelo,
+          anio: bus.anio,
+          imageUrl: resolveImage(bus.imageUrl),
         }));
 
         setBusesByCompany(mapped);
@@ -83,31 +85,29 @@ export const CompaniesPage = () => {
   const selectedCompany = companyData.find((c) => c.id === selectedCompanyId);
 
   return (
-    <div className="flex flex-col lg:flex-row h-[calc(100vh-64px)] bg-gray-100 px-6 py-6 gap-6">
+    <div className="flex flex-col lg:flex-row h-[calc(100vh-64px)] bg-gray-100 px-6 gap-6">
       {/* Panel izquierdo */}
-      <section className="lg:w-1/2 bg-white p-6 rounded-xl shadow-sm overflow-y-auto flex flex-col">
+      <section className="lg:w-1/2 bg-white px-6 py-4 rounded-xl shadow-sm overflow-y-auto flex flex-col">
         <Title text="Catálogo de Empresas" />
 
-        {/* Filtrado */}
+        {/* Filtros */}
         <div className="mb-6 flex gap-4 border-b pb-4">
-            <input
-              type="text"
-              placeholder="Buscar empresa..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="flex-grow px-4 py-2 border rounded-md focus:ring-2 focus:ring-cyan-600"
-            />
-            <select
-              value={pageSize}
-              onChange={(e) => setPageSize(+e.target.value)}
-              className="px-4 py-2 border rounded-md focus:ring-2 focus:ring-cyan-600"
-            >
-              {[5, 10, 25, 50].map((sz) => (
-                <option key={sz} value={sz}>
-                  Mostrar {sz}
-                </option>
-              ))}
-            </select>
+          <input
+            type="text"
+            placeholder="Buscar empresa..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="flex-grow px-4 py-2 border rounded-md focus:ring-2 focus:ring-cyan-600"
+          />
+          <select
+            value={pageSize}
+            onChange={(e) => setPageSize(+e.target.value)}
+            className="px-4 py-2 border rounded-md focus:ring-2 focus:ring-cyan-600"
+          >
+            {[5, 10, 25, 50].map((sz) => (
+              <option key={sz} value={sz}>Mostrar {sz}</option>
+            ))}
+          </select>
         </div>
 
         {/* Lista de empresas */}
@@ -121,6 +121,7 @@ export const CompaniesPage = () => {
                   key={company.id}
                   title={company.name}
                   icon={<Briefcase size={48} />}
+                  imageUrl={resolveImage((company as any).imageUrl)}
                   onClick={() => setSelectedCompanyId(company.id)}
                   onEdit={() => navigate(`/companies/${company.id}/edit`)}
                   onDelete={() => navigate(`/companies/${company.id}/delete`)}
@@ -139,9 +140,7 @@ export const CompaniesPage = () => {
           >
             ← Anterior
           </button>
-          <span className="text-gray-700 font-medium">
-            Página {page} de {totalPages}
-          </span>
+          <span className="text-gray-700 font-medium">Página {page} de {totalPages}</span>
           <button
             disabled={page >= totalPages}
             onClick={() => setPage(page + 1)}
@@ -163,7 +162,7 @@ export const CompaniesPage = () => {
       </section>
 
       {/* Panel derecho */}
-      <section className="lg:w-1/2 bg-white p-6 rounded-xl shadow-sm overflow-y-auto">
+      <section className="lg:w-1/2 bg-white px-6 py-4 rounded-xl shadow-sm overflow-hidden">
         <Title text="Ficha de Empresa" />
         {selectedCompany ? (
           <div className="space-y-3">

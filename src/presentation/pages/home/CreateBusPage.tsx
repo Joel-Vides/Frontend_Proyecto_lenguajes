@@ -41,10 +41,10 @@ export const CreateBusPage = () => {
       form.append("companyId", values.companyId);
 
       // Coordenadas con coma:
-      form.append("StartLocation.Latitude",  toFormNumber(values.startLocation.latitude));
+      form.append("StartLocation.Latitude", toFormNumber(values.startLocation.latitude));
       form.append("StartLocation.Longitude", toFormNumber(values.startLocation.longitude));
-      form.append("EndLocation.Latitude",    toFormNumber(values.endLocation.latitude));
-      form.append("EndLocation.Longitude",   toFormNumber(values.endLocation.longitude));
+      form.append("EndLocation.Latitude", toFormNumber(values.endLocation.latitude));
+      form.append("EndLocation.Longitude", toFormNumber(values.endLocation.longitude));
 
       if (values.image) form.append("image", values.image);
 
@@ -88,9 +88,8 @@ export const CreateBusPage = () => {
               type="text"
               id="numeroBus"
               name="numeroBus"
-              className={`w-full px-4 py-2 border ${
-                formik.errors.numeroBus && formik.touched.numeroBus ? "border-red-400" : "border-gray-300"
-              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${formik.errors.numeroBus && formik.touched.numeroBus ? "border-red-400" : "border-gray-300"
+                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.numeroBus}
               onChange={formik.handleChange}
             />
@@ -108,9 +107,8 @@ export const CreateBusPage = () => {
               type="text"
               id="chofer"
               name="chofer"
-              className={`w-full px-4 py-2 border ${
-                formik.errors.chofer && formik.touched.chofer ? "border-red-400" : "border-gray-300"
-              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${formik.errors.chofer && formik.touched.chofer ? "border-red-400" : "border-gray-300"
+                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.chofer}
               onChange={formik.handleChange}
             />
@@ -128,9 +126,8 @@ export const CreateBusPage = () => {
               type="text"
               id="modelo"
               name="modelo"
-              className={`w-full px-4 py-2 border ${
-                formik.errors.modelo && formik.touched.modelo ? "border-red-400" : "border-gray-300"
-              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${formik.errors.modelo && formik.touched.modelo ? "border-red-400" : "border-gray-300"
+                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.modelo}
               onChange={formik.handleChange}
             />
@@ -148,9 +145,8 @@ export const CreateBusPage = () => {
               type="number"
               id="anio"
               name="anio"
-              className={`w-full px-4 py-2 border ${
-                formik.errors.anio && formik.touched.anio ? "border-red-400" : "border-gray-300"
-              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${formik.errors.anio && formik.touched.anio ? "border-red-400" : "border-gray-300"
+                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               value={formik.values.anio}
               onChange={formik.handleChange}
             />
@@ -170,9 +166,8 @@ export const CreateBusPage = () => {
               value={formik.values.companyId}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full px-4 py-2 border ${
-                formik.errors.companyId && formik.touched.companyId ? "border-red-400" : "border-gray-300"
-              } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
+              className={`w-full px-4 py-2 border ${formik.errors.companyId && formik.touched.companyId ? "border-red-400" : "border-gray-300"
+                } rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition`}
               required
             >
               <option value="">Seleccione una empresa</option>
@@ -192,7 +187,11 @@ export const CreateBusPage = () => {
             <label htmlFor="image" className="block text-gray-700 text-sm font-semibold mb-2">
               Imagen del Bus
             </label>
-            <input id="image" name="image" type="file" accept="image/*" onChange={handleFileChange} className="block" />
+            <input id="image" name="image" type="file" accept="image/*" onChange={handleFileChange}
+            className="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4
+                        file:rounded-md file:border-0 file:text-sm file:font-semibold
+                        file:bg-cyan-50 file:text-cyan-700 hover:file:bg-cyan-100"
+            />
             {formik.errors.image && formik.touched.image && (
               <p className="text-red-500 text-xs mt-2">{formik.errors.image}</p>
             )}
@@ -214,11 +213,11 @@ export const CreateBusPage = () => {
                 longitude: Number(formik.values.endLocation.longitude) || Number(formik.values.startLocation.longitude) || -87.2068,
               }}
               onChangeStart={(p) => {
-                formik.setFieldValue("startLocation.latitude",  +p.latitude.toFixed(6));
+                formik.setFieldValue("startLocation.latitude", +p.latitude.toFixed(6));
                 formik.setFieldValue("startLocation.longitude", +p.longitude.toFixed(6));
               }}
               onChangeEnd={(p) => {
-                formik.setFieldValue("endLocation.latitude",  +p.latitude.toFixed(6));
+                formik.setFieldValue("endLocation.latitude", +p.latitude.toFixed(6));
                 formik.setFieldValue("endLocation.longitude", +p.longitude.toFixed(6));
               }}
             />

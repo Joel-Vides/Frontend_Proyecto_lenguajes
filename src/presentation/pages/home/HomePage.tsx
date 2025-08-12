@@ -47,10 +47,10 @@ export const HomePage = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row h-[calc(100vh-64px)] bg-gray-100 px-6 py-6 gap-6">
+    <div className="flex flex-col lg:flex-row h-[calc(100vh-64px)] bg-gray-100 px-6 gap-6">
 
       {/* Panel izquierdo */}
-      <section className="lg:w-1/2 bg-white rounded-xl border border-gray-200 shadow-sm p-6 overflow-y-auto flex flex-col">
+      <section className="lg:w-1/2 bg-white rounded-xl border border-gray-200 shadow-sm px-6 py-4 overflow-y-auto flex flex-col">
         <Title text="Buses disponibles" />
 
         <div className="mt-4 mb-6 flex flex-wrap gap-4 items-center border-b pb-4">
@@ -114,8 +114,8 @@ export const HomePage = () => {
       </section>
 
       {/* Panel derecho */}
-      <section className="lg:w-1/2 bg-white rounded-xl border border-gray-200 shadow-sm p-6 overflow-y-auto">
-        <Title text="Información del Bus" />
+      <section className="lg:w-1/2 bg-white rounded-xl border border-gray-200 shadow-sm px-6 py-4 overflow-y-auto">
+        <Title text="Ficha del Bus" />
         {selectedBus ? (
           <>
             <div className="mt-4 space-y-3 text-gray-800">
@@ -131,7 +131,7 @@ export const HomePage = () => {
                   title="Editar ruta del bus"
                 >
                   <Route size={18} />
-                  <span className="hidden sm:inline">Editar ruta</span>
+                  <span>Editar ruta</span>
                 </button>
               </div>
 

@@ -3,4 +3,5 @@ export interface CompanyResponse {
     name:        string;
     email:       string;
     phoneNumber: string;
+    imageUrl?: string;
 }

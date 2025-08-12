@@ -3,4 +3,5 @@ export interface OneCompanyResponse {
     name:        string;
     email:       string;
     phoneNumber: string;
+    imageUrl?: string;
 }
