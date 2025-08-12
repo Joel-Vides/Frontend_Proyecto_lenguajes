@@ -66,7 +66,7 @@ export const BusCarousel = ({ buses, onSelectBus }: Props) => {
 
   return (
     <div className="relative w-full overflow-hidden">
-      {/* Flecha izquierda (súper sutil) */}
+      {/* Flecha izquierda */}
       <button
         onClick={() => scrollBy(-340)}
         className="absolute left-2 top-1/2 -translate-y-1/2 z-20 rounded-full p-1.5
@@ -103,7 +103,7 @@ export const BusCarousel = ({ buses, onSelectBus }: Props) => {
         ))}
       </div>
 
-      {/* Flecha derecha (súper sutil) */}
+      {/* Flecha derecha */}
       <button
         onClick={() => scrollBy(340)}
         className="absolute right-2 top-1/2 -translate-y-1/2 z-20 rounded-full p-1.5

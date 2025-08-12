@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Fix de iconos en Vite
+// Arregla los iconos en Vite
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
@@ -48,7 +48,7 @@ export const PickRouteMap = ({ start, end, onChangeStart, onChangeEnd }: Props) 
 
     const center: [number, number] = isValid(start)
       ? [start.latitude, start.longitude]
-      : [14.0818, -87.2068]; // fallback
+      : [14.0818, -87.2068];
 
     const map = L.map(containerRef.current, { center, zoom: 13 });
     mapRef.current = map;
@@ -57,7 +57,7 @@ export const PickRouteMap = ({ start, end, onChangeStart, onChangeEnd }: Props) 
       attribution: "&copy; OpenStreetMap contributors",
     }).addTo(map);
 
-    // Click: coloca el punto según el modo
+    // Coloca el punto en el mapa
     map.on("click", (e: L.LeafletMouseEvent) => {
       const { lat, lng } = e.latlng;
       if (mode === "start") onChangeStart({ latitude: lat, longitude: lng });
@@ -75,7 +75,7 @@ export const PickRouteMap = ({ start, end, onChangeStart, onChangeEnd }: Props) 
     };
   }, [mode, onChangeStart, onChangeEnd]);
 
-  // Sync visual con props
+  // Propiedades
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;

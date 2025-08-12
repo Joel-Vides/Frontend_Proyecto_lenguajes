@@ -62,6 +62,6 @@ export const busValidationSchema: Yup.ObjectSchema<BusModel> = Yup.object({
       return !file || file.size <= 2 * 1024 * 1024;
     })
     .test("fileType", "Formato no soportado", (file) => {
-      return !file || ["image/jpeg","image/png","image/webp"].includes(file.type);
+      return !file || ["image/jpeg", "image/png", "image/webp"].includes(file.type);
     }),
 });

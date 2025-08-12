@@ -14,10 +14,10 @@ export const EditBusPage = () => {
   const navigate = useNavigate();
   const { oneBusQuery, editBusMutation } = useBuses(busId);
 
-  // preview de imagen (muestra la actual y luego la nueva si cambias)
+  // Preview de imagen
   const [preview, setPreview] = useState<string>("");
 
-  // helper para convertir paths relativos devueltos por la API a URL absoluta
+  // Para que la imagen no de Problemas al Subirla
   const API_BASE = import.meta.env.VITE_API_URL.replace(/\/api\/?$/, "");
   const resolveImage = (src?: string) =>
     !src ? "" : /^https?:\/\//i.test(src) ? src : `${API_BASE}${src.startsWith("/") ? "" : "/"}${src}`;
@@ -58,7 +58,6 @@ export const EditBusPage = () => {
     },
   });
 
-  // Cuando llega el bus, llenamos el form y pre-cargamos la imagen actual
   useEffect(() => {
     if (oneBusQuery.isFetched && oneBusQuery.data?.data) {
       const b = oneBusQuery.data.data;
@@ -85,7 +84,7 @@ export const EditBusPage = () => {
       reader.onload = () => setPreview(String(reader.result));
       reader.readAsDataURL(file);
     } else {
-      // si limpias el file input, mantenemos el preview existente (imagen actual)
+      // Mantiene la Imagen actual si no hay archivo nuevo
       setPreview(resolveImage(oneBusQuery.data?.data?.imageUrl));
     }
   };

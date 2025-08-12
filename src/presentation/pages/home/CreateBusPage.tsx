@@ -13,7 +13,7 @@ export const CreateBusPage = () => {
   const [companies, setEmpresas] = useState<CompanyResponse[]>([]);
   const [preview, setPreview] = useState<string>("");
 
-  // Envío con coma decimal (no se toca tu backend)
+  // Envío con coma decimal
   const toFormNumber = (v: unknown) => {
     if (v === null || v === undefined) return "";
     const n = typeof v === "number" ? v : parseFloat(String(v).replace(",", "."));
@@ -40,7 +40,7 @@ export const CreateBusPage = () => {
       form.append("anio", String(values.anio));
       form.append("companyId", values.companyId);
 
-      // Coordenadas con coma:
+      // Coordenadas con coma
       form.append("StartLocation.Latitude", toFormNumber(values.startLocation.latitude));
       form.append("StartLocation.Longitude", toFormNumber(values.startLocation.longitude));
       form.append("EndLocation.Latitude", toFormNumber(values.endLocation.latitude));
@@ -198,7 +198,7 @@ export const CreateBusPage = () => {
             {preview && <img src={preview} alt="Preview" className="mt-4 max-h-48 object-contain" />}
           </div>
 
-          {/* MAPA: seleccionar coordenadas */}
+          {/* Seleccionar coordenadas en el Mapa */}
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-semibold mb-2">
               Ruta (selecciona Inicio/Destino en el mapa)

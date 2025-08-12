@@ -10,13 +10,13 @@ export const CreateCompanyPage = () => {
   const [preview, setPreview] = useState<string | null>(null);
 
   const formik = useFormik({
-    // añadimos "image" sin tocar tus initialValues reales
+    // Para añadir la Imagen si tocar los initialValues
     initialValues: { ...companyInitialValues, image: null as File | null } as any,
     validationSchema: companyValidationSchema,
     validateOnChange: true,
     validateOnBlur: true,
     onSubmit: async (values: any) => {
-      // si hay archivo: FormData; si no: JSON como siempre
+      // si hay archivo: FormData; si no: JSON
       if (values.image instanceof File) {
         const fd = new FormData();
         fd.append("name", values.name);

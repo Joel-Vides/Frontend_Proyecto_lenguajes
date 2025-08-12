@@ -11,7 +11,7 @@ export const DeleteBusPage = () => {
   const handleDelete = () => {
     deleteBusMutation.mutate(undefined, {
       onSuccess: () => {
-        navigate("/"); // Redirige al HomePage tras eliminar
+        navigate("/"); 
       },
     });
   };

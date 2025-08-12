@@ -112,7 +112,7 @@ export const EditRouteBusPage = () => {
                         onSubmit={formik.handleSubmit}
                         className="mt-6 w-full max-w-3xl bg-white rounded-xl shadow-md p-6 border border-gray-200 space-y-6"
                     >
-                        {/* Encabezado con info básica */}
+                        {/* Encabezado con info */}
                         <div className="flex items-center justify-between border-b pb-3">
                             <h2 className="text-xl font-semibold text-gray-800">
                                 Bus {bus.numeroBus} · {bus.modelo} · {bus.chofer}

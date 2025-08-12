@@ -11,7 +11,7 @@ export const getPaginationCompaniesAction = async (
   searchTerm?: string
 ): Promise<ApiResponse<PageResponse<CompanyResponse>>> => {
   try {
-    // Construimos los params manualmente
+
     const params = new URLSearchParams();
 
     params.append("page", page.toString());
