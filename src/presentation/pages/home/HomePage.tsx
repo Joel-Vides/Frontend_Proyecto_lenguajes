@@ -169,10 +169,15 @@ export const HomePage = () => {
         </span>
       </button>
 
-      {/* Botón flotante: Comprar Ticket */}
+      {/* Botón flotante: Comprar Ticket (-> BuyTicketPage) */}
       <button
-        onClick={() => navigate("/tickets/create")}
-        className="fixed bottom-6 right-6 bg-cyan-800 text-white rounded-full w-14 h-14 shadow-lg hover:shadow-xl hover:bg-cyan-900 transition-all flex items-center justify-center group"
+        onClick={() =>
+          selectedBusId
+            ? navigate(`/tickets/buy/${selectedBusId}`)
+            : alert("Selecciona un bus primero para comprar el ticket.")
+        }
+        disabled={!selectedBusId}
+        className="fixed bottom-6 right-6 bg-cyan-800 text-white rounded-full w-14 h-14 shadow-lg hover:shadow-xl hover:bg-cyan-900 transition-all flex items-center justify-center group disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <Ticket size={24} />
         <span className="absolute right-16 bg-cyan-800 text-white px-3 py-1 rounded-md text-sm font-medium opacity-0 group-hover:opacity-100 transition duration-300 whitespace-nowrap shadow">
